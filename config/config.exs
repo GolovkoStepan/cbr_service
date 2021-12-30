@@ -55,6 +55,13 @@ config :dart_sass,
     cd: Path.expand("../assets", __DIR__)
   ]
 
+# Currencies parser settings
+config :cbr_service, CbrService.CurrenciesParser,
+  url: "http://www.cbr.ru/scripts/XML_daily.asp"
+
+# Codepagex settings
+config :codepagex, :encodings, ["VENDORS/MICSFT/WINDOWS/CP1251"]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

@@ -49,7 +49,11 @@ defmodule CbrService.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:dart_sass, "~> 0.3", runtime: Mix.env() == :dev}
+      {:dart_sass, "~> 0.3", runtime: Mix.env() == :dev},
+      {:httpoison, "~> 1.8"},
+      {:codepagex, "~> 0.1.6"},
+      {:elixir_xml_to_map, "~> 2.0"},
+      {:mock, "~> 0.3.0", only: :test}
     ]
   end
 
@@ -65,7 +69,11 @@ defmodule CbrService.MixProject do
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
-      "assets.deploy": ["esbuild default --minify", "phx.digest"]
+      "assets.deploy": [
+        "esbuild default --minify",
+        "sass default --no-source-map --style=compressed",
+        "phx.digest"
+      ]
     ]
   end
 end
