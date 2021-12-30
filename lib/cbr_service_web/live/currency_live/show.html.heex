@@ -1,0 +1,32 @@
+<h1>Show Currency</h1>
+
+<ul>
+
+  <li>
+    <strong>Num code:</strong>
+    <%= @currency.num_code %>
+  </li>
+
+  <li>
+    <strong>Char code:</strong>
+    <%= @currency.char_code %>
+  </li>
+
+  <li>
+    <strong>Nominal:</strong>
+    <%= @currency.nominal %>
+  </li>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @currency.name %>
+  </li>
+
+  <li>
+    <strong>Rate:</strong>
+    <%= @currency.rate %>
+  </li>
+
+</ul>
+
+<span><%= live_redirect "Back", to: Routes.currency_index_path(@socket, :index) %></span>

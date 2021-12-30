@@ -17,7 +17,9 @@ defmodule CbrServiceWeb.Router do
   scope "/", CbrServiceWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", CurrencyLive.Index, :index
+    live "/currencies", CurrencyLive.Index, :index
+    live "/currencies/:id", CurrencyLive.Show, :show
   end
 
   # Other scopes may use custom stacks.

@@ -1,0 +1,30 @@
+<h1>Listing Currencies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Num code</th>
+      <th>Char code</th>
+      <th>Nominal</th>
+      <th>Name</th>
+      <th>Rate</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="currencies">
+    <%= for currency <- @currencies do %>
+      <tr id={"currency-#{currency.id}"}>
+        <td><%= currency.num_code %></td>
+        <td><%= currency.char_code %></td>
+        <td><%= currency.nominal %></td>
+        <td><%= currency.name %></td>
+        <td><%= currency.rate %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.currency_show_path(@socket, :show, currency) %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
