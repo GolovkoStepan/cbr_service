@@ -38,6 +38,17 @@ defmodule CbrService.Currencies do
   def get_currency!(id), do: Repo.get!(Currency, id)
 
   @doc """
+  Gets a single currency by num code.
+
+  ## Examples
+
+      iex> get_by_num_code(233)
+      %Currency{}
+
+  """
+  def get_by_num_code(num_code), do: Repo.get_by(Currency, num_code: num_code)
+
+  @doc """
   Creates a currency.
 
   ## Examples
@@ -71,6 +82,24 @@ defmodule CbrService.Currencies do
     currency
     |> Currency.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:updated)
+  end
+
+  @doc """
+  Updates all currencies by array of maps.
+
+  ## Examples
+
+      iex> update_all_currencies([])
+
+  """
+  def update_all_currencies(arr) do
+    Enum.each(arr, fn(record) ->
+      get_by_num_code(record.num_code)
+      |> update_currency(%{rate: record.rate})
+    end)
+
+    broadcast(:all, :updated)
   end
 
   @doc """
@@ -100,5 +129,27 @@ defmodule CbrService.Currencies do
   """
   def change_currency(%Currency{} = currency, attrs \\ %{}) do
     Currency.changeset(currency, attrs)
+  end
+
+  @spec subscribe :: :ok | {:error, {:already_registered, pid}}
+  def subscribe do
+    Phoenix.PubSub.subscribe(CbrService.PubSub, "currencies")
+  end
+
+  @spec subscribe(any) :: :ok | {:error, {:already_registered, pid}}
+  def subscribe(id) do
+    Phoenix.PubSub.subscribe(CbrService.PubSub, "currency-#{id}")
+  end
+
+  defp broadcast({:error, _reason} = error, _event), do: error
+
+  defp broadcast(:all, event) do
+    Phoenix.PubSub.broadcast(CbrService.PubSub, "currencies", {event, :all})
+    :ok
+  end
+
+  defp broadcast({:ok, currency}, event) do
+    Phoenix.PubSub.broadcast(CbrService.PubSub, "currency-#{currency.id}", {event, currency})
+    {:ok, currency}
   end
 end

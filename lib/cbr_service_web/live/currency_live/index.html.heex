@@ -1,30 +1,14 @@
-<h1>Listing Currencies</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Num code</th>
-      <th>Char code</th>
-      <th>Nominal</th>
-      <th>Name</th>
-      <th>Rate</th>
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="currencies">
-    <%= for currency <- @currencies do %>
-      <tr id={"currency-#{currency.id}"}>
-        <td><%= currency.num_code %></td>
-        <td><%= currency.char_code %></td>
-        <td><%= currency.nominal %></td>
-        <td><%= currency.name %></td>
-        <td><%= currency.rate %></td>
-
-        <td>
-          <span><%= live_redirect "Show", to: Routes.currency_show_path(@socket, :show, currency) %></span>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row row-cols-1 row-cols-md-2 g-4" id="currencies">
+  <%= for currency <- @currencies do %>
+    <div class="col" id={"currency-#{currency.id}"}>
+      <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title"><%= currency.name %></h5>
+            <p class="card-text"><%= "Курс: #{currency.rate}" %></p>
+            <%= live_redirect "Подробная информация", to: Routes.currency_show_path(@socket, :show, currency), class: "btn btn-secondary" %>
+          </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="py-2"></div>

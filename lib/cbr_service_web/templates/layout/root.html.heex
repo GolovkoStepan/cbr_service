@@ -5,11 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <%= csrf_meta_tag() %>
-    <%= live_title_tag assigns[:page_title] || "CbrService", suffix: " · Phoenix Framework" %>
+    <%= live_title_tag assigns[:page_title] || "Currencies App", suffix: " · Phoenix Framework" %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body>
+    <div class="container py-2">
+      <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+          <img src={Routes.static_path(@conn, "/images/app-icon.svg")} width="55" height="55"/>
+          <span class="fs-4">Currencies App</span>
+        </a>
+
+        <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+          <%= link "Обновить курсы валют", to: "#", phx_click: "update_rates", class: "me-3 py-2 text-dark text-decoration-none"%>
+        </nav>
+      </div>
+    </div>
+
     <%= @inner_content %>
   </body>
 </html>

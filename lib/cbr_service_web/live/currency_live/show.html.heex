@@ -1,32 +1,15 @@
-<h1>Show Currency</h1>
+<div class="alert alert-secondary">
+  <%= live_redirect "Валюты", to: Routes.currency_index_path(@socket, :index) %>
+  /
+  <%= @currency.name %>
+</div>
 
-<ul>
-
-  <li>
-    <strong>Num code:</strong>
-    <%= @currency.num_code %>
-  </li>
-
-  <li>
-    <strong>Char code:</strong>
-    <%= @currency.char_code %>
-  </li>
-
-  <li>
-    <strong>Nominal:</strong>
-    <%= @currency.nominal %>
-  </li>
-
-  <li>
-    <strong>Name:</strong>
-    <%= @currency.name %>
-  </li>
-
-  <li>
-    <strong>Rate:</strong>
-    <%= @currency.rate %>
-  </li>
-
-</ul>
-
-<span><%= live_redirect "Back", to: Routes.currency_index_path(@socket, :index) %></span>
+<div class="card">
+  <div class="card-body">
+    <p><strong>Название:</strong> <%= @currency.name %></p>
+    <p><strong>Числовой код:</strong> <%= @currency.num_code %></p>
+    <p><strong>Символьный код:</strong> <%= @currency.char_code %></p>
+    <p><strong>Курс:</strong> <%= @currency.rate %></p>
+    <p class="mb-0"><strong>Номинал:</strong> <%= @currency.nominal %></p>
+  </div>
+</div>

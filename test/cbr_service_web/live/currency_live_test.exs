@@ -15,8 +15,7 @@ defmodule CbrServiceWeb.CurrencyLiveTest do
     test "lists all currencies", %{conn: conn, currency: currency} do
       {:ok, _index_live, html} = live(conn, Routes.currency_index_path(conn, :index))
 
-      assert html =~ "Listing Currencies"
-      assert html =~ currency.char_code
+      assert html =~ "Курс: #{currency.rate}"
     end
   end
 
@@ -26,7 +25,6 @@ defmodule CbrServiceWeb.CurrencyLiveTest do
     test "displays currency", %{conn: conn, currency: currency} do
       {:ok, _show_live, html} = live(conn, Routes.currency_show_path(conn, :show, currency))
 
-      assert html =~ "Show Currency"
       assert html =~ currency.char_code
     end
   end
