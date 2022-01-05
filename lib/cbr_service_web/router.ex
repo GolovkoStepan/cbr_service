@@ -1,6 +1,8 @@
 defmodule CbrServiceWeb.Router do
   use CbrServiceWeb, :router
 
+  import CbrServiceWeb.UserAuth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -8,18 +10,11 @@ defmodule CbrServiceWeb.Router do
     plug :put_root_layout, {CbrServiceWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug :fetch_current_user
   end
 
   pipeline :api do
     plug :accepts, ["json"]
-  end
-
-  scope "/", CbrServiceWeb do
-    pipe_through :browser
-
-    live "/", CurrencyLive.Index, :index
-    live "/currencies", CurrencyLive.Index, :index
-    live "/currencies/:id", CurrencyLive.Show, :show
   end
 
   # Other scopes may use custom stacks.
@@ -54,5 +49,42 @@ defmodule CbrServiceWeb.Router do
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  ## Authentication routes
+
+  scope "/", CbrServiceWeb do
+    pipe_through [:browser, :redirect_if_user_is_authenticated]
+
+    get "/users/register", UserRegistrationController, :new
+    post "/users/register", UserRegistrationController, :create
+    get "/users/log_in", UserSessionController, :new
+    post "/users/log_in", UserSessionController, :create
+    get "/users/reset_password", UserResetPasswordController, :new
+    post "/users/reset_password", UserResetPasswordController, :create
+    get "/users/reset_password/:token", UserResetPasswordController, :edit
+    put "/users/reset_password/:token", UserResetPasswordController, :update
+  end
+
+  scope "/", CbrServiceWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    get "/users/settings", UserSettingsController, :edit
+    put "/users/settings", UserSettingsController, :update
+    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+
+    live "/", CurrencyLive.Index, :index
+    live "/currencies", CurrencyLive.Index, :index
+    live "/currencies/:id", CurrencyLive.Show, :show
+  end
+
+  scope "/", CbrServiceWeb do
+    pipe_through [:browser]
+
+    delete "/users/log_out", UserSessionController, :delete
+    get "/users/confirm", UserConfirmationController, :new
+    post "/users/confirm", UserConfirmationController, :create
+    get "/users/confirm/:token", UserConfirmationController, :edit
+    post "/users/confirm/:token", UserConfirmationController, :update
   end
 end

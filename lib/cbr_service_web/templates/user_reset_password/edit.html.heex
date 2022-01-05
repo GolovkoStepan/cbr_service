@@ -1,0 +1,36 @@
+<h1 class="mb-4">Сброс пароля</h1>
+
+<div class="row">
+  <div class="col-md-6">
+
+    <.form let={f} for={@changeset} action={Routes.user_reset_password_path(@conn, :update, @token)}>
+      <%= if @changeset.action do %>
+        <div class="alert alert-danger">
+          Что-то пошло не так. Просмотрите сообщения ниже...
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= label f, :password, "Новый пароль", class: "form-label" %>
+        <%= password_input f, :password, required: true, class: "form-control" %>
+        <%= error_tag f, :password %>
+      </div>
+
+      <div class="mb-3">
+        <%= label f, :password_confirmation, "Подтвердите пароль", class: "form-label" %>
+        <%= password_input f, :password_confirmation, required: true, class: "form-control" %>
+        <%= error_tag f, :password_confirmation %>
+      </div>
+
+      <div>
+        <%= submit "Сбросить пароль", class: "btn btn-secondary" %>
+      </div>
+    </.form>
+
+    <div class="py-2"></div>
+
+    <p><%= link "Регистрация", to: Routes.user_registration_path(@conn, :new) %></p>
+    <p><%= link "Войти", to: Routes.user_session_path(@conn, :new) %></p>
+
+  </div>
+</div>

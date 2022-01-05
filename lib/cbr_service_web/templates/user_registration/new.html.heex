@@ -1,0 +1,36 @@
+<h1 class="mb-4">Регистрация</h1>
+
+<div class="row">
+  <div class="col-md-6">
+
+    <.form let={f} for={@changeset} action={Routes.user_registration_path(@conn, :create)}>
+      <%= if @changeset.action do %>
+        <div class="alert alert-danger">
+          Что-то пошло не так. Просмотрите сообщения ниже...
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= label f, :email, class: "form-label" %>
+        <%= email_input f, :email, required: true, class: "form-control" %>
+        <%= error_tag f, :email %>
+      </div>
+
+      <div class="mb-3">
+        <%= label f, :password, "Пароль", class: "form-label" %>
+        <%= password_input f, :password, required: true, class: "form-control" %>
+        <%= error_tag f, :password %>
+      </div>
+
+      <div>
+        <%= submit "Зарегистрироваться", class: "btn btn-secondary" %>
+      </div>
+    </.form>
+
+    <div class="py-2"></div>
+    
+    <p><%= link "Войти", to: Routes.user_session_path(@conn, :new) %></p>
+    <p><%= link "Забыли ваш пароль?", to: Routes.user_reset_password_path(@conn, :new) %></p>
+
+  </div>
+</div>

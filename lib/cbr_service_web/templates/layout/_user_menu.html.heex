@@ -1,0 +1,8 @@
+<%= if @current_user do %>
+  <%= link "Обновить курсы валют", to: "#", phx_click: "update_rates", class: "me-3 py-2 text-dark text-decoration-none"%>
+  <%= link @current_user.email, to: Routes.user_settings_path(@conn, :edit), class: "me-3 py-2 text-dark text-decoration-none" %>
+  <%= link "Выйти", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "me-3 py-2 text-dark text-decoration-none" %>
+<% else %>
+  <%= link "Регистрация", to: Routes.user_registration_path(@conn, :new), class: "me-3 py-2 text-dark text-decoration-none" %>
+  <%= link "Войти", to: Routes.user_session_path(@conn, :new), class: "me-3 py-2 text-dark text-decoration-none" %>
+<% end %>

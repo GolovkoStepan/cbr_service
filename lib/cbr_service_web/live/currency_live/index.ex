@@ -1,12 +1,16 @@
 defmodule CbrServiceWeb.CurrencyLive.Index do
   use CbrServiceWeb, :live_view
 
+  alias CbrService.Accounts
   alias CbrService.Currencies
   alias CbrService.CurrenciesParser
 
   @impl true
-  def mount(_params, _session, socket) do
-    {:ok, assign(socket, :currencies, list_currencies())}
+  def mount(_params, %{"user_token" => token} = _session, socket) do
+    {:ok,
+     socket
+     |> assign(current_user: Accounts.get_user_by_session_token(token))
+     |> assign(:currencies, list_currencies())}
   end
 
   @impl true

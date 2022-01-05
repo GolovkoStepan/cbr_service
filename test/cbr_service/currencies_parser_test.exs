@@ -15,7 +15,7 @@ defmodule CbrService.CurrenciesParserTest do
     test "should get xml from cbr.ru and convert it to map" do
       {:ok, content} = File.read(@file_path)
 
-      with_mock HTTPoison, [get!: fn(_url) -> %{body: content} end] do
+      with_mock HTTPoison, get!: fn _url -> %{body: content} end do
         assert @expected_result = CurrenciesParser.fetch()
       end
     end

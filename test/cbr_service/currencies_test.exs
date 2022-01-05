@@ -21,7 +21,13 @@ defmodule CbrService.CurrenciesTest do
     end
 
     test "create_currency/1 with valid data creates a currency" do
-      valid_attrs = %{char_code: "some char_code", name: "some name", nominal: 42, num_code: 42, rate: 120.5}
+      valid_attrs = %{
+        char_code: "some char_code",
+        name: "some name",
+        nominal: 42,
+        num_code: 42,
+        rate: 120.5
+      }
 
       assert {:ok, %Currency{} = currency} = Currencies.create_currency(valid_attrs)
       assert currency.char_code == "some char_code"
@@ -37,7 +43,14 @@ defmodule CbrService.CurrenciesTest do
 
     test "update_currency/2 with valid data updates the currency" do
       currency = currency_fixture()
-      update_attrs = %{char_code: "some updated char_code", name: "some updated name", nominal: 43, num_code: 43, rate: 456.7}
+
+      update_attrs = %{
+        char_code: "some updated char_code",
+        name: "some updated name",
+        nominal: 43,
+        num_code: 43,
+        rate: 456.7
+      }
 
       assert {:ok, %Currency{} = currency} = Currencies.update_currency(currency, update_attrs)
       assert currency.char_code == "some updated char_code"

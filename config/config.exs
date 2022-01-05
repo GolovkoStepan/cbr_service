@@ -56,8 +56,7 @@ config :dart_sass,
   ]
 
 # Currencies parser settings
-config :cbr_service, CbrService.CurrenciesParser,
-  url: "http://www.cbr.ru/scripts/XML_daily.asp"
+config :cbr_service, CbrService.CurrenciesParser, url: "http://www.cbr.ru/scripts/XML_daily.asp"
 
 # Codepagex settings
 config :codepagex, :encodings, ["VENDORS/MICSFT/WINDOWS/CP1251"]

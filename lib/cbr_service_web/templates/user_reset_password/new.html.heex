@@ -1,0 +1,23 @@
+<h1 class="mb-4">Забыли ваш пароль?</h1>
+
+<div class="row">
+  <div class="col-md-6">
+
+    <.form let={f} for={:user} action={Routes.user_reset_password_path(@conn, :create)}>
+      <div class="mb-3">
+        <%= label f, :email, class: "form-label" %>
+        <%= email_input f, :email, required: true, class: "form-control" %>
+      </div>
+
+      <div>
+        <%= submit "Отправить инструкцию по восстановлению", class: "btn btn-secondary" %>
+      </div>
+    </.form>
+
+    <div class="py-2"></div>
+    
+    <p><%= link "Регистрация", to: Routes.user_registration_path(@conn, :new) %></p>
+    <p><%= link "Войти", to: Routes.user_session_path(@conn, :new) %></p>
+
+  </div>
+</div>

@@ -94,7 +94,7 @@ defmodule CbrService.Currencies do
 
   """
   def update_all_currencies(arr) do
-    Enum.each(arr, fn(record) ->
+    Enum.each(arr, fn record ->
       get_by_num_code(record.num_code)
       |> update_currency(%{rate: record.rate})
     end)
