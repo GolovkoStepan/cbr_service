@@ -54,7 +54,8 @@ defmodule CbrService.MixProject do
       {:httpoison, "~> 1.8"},
       {:codepagex, "~> 0.1.6"},
       {:elixir_xml_to_map, "~> 2.0"},
-      {:mock, "~> 0.3.0", only: :test}
+      {:mock, "~> 0.3.0", only: :test},
+      {:ex_check, "~> 0.14.0", only: [:dev], runtime: false}
     ]
   end
 

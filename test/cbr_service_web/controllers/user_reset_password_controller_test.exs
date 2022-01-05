@@ -26,7 +26,10 @@ defmodule CbrServiceWeb.UserResetPasswordControllerTest do
         })
 
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "Если ваш адрес электронной почты находится в нашей системе, вы вскоре получите инструкции по изменению пароля."
+
+      assert get_flash(conn, :info) =~
+               "Если ваш адрес электронной почты находится в нашей системе, вы вскоре получите инструкции по изменению пароля."
+
       assert Repo.get_by!(Accounts.UserToken, user_id: user.id).context == "reset_password"
     end
 
@@ -37,7 +40,10 @@ defmodule CbrServiceWeb.UserResetPasswordControllerTest do
         })
 
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :info) =~ "Если ваш адрес электронной почты находится в нашей системе, вы вскоре получите инструкции по изменению пароля."
+
+      assert get_flash(conn, :info) =~
+               "Если ваш адрес электронной почты находится в нашей системе, вы вскоре получите инструкции по изменению пароля."
+
       assert Repo.all(Accounts.UserToken) == []
     end
   end
@@ -60,7 +66,9 @@ defmodule CbrServiceWeb.UserResetPasswordControllerTest do
     test "does not render reset password with invalid token", %{conn: conn} do
       conn = get(conn, Routes.user_reset_password_path(conn, :edit, "oops"))
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :error) =~ "Ссылка для сброса пароля недействительна или срок ее действия истек."
+
+      assert get_flash(conn, :error) =~
+               "Ссылка для сброса пароля недействительна или срок ее действия истек."
     end
   end
 
@@ -107,7 +115,9 @@ defmodule CbrServiceWeb.UserResetPasswordControllerTest do
     test "does not reset password with invalid token", %{conn: conn} do
       conn = put(conn, Routes.user_reset_password_path(conn, :update, "oops"))
       assert redirected_to(conn) == "/"
-      assert get_flash(conn, :error) =~ "Ссылка для сброса пароля недействительна или срок ее действия истек."
+
+      assert get_flash(conn, :error) =~
+               "Ссылка для сброса пароля недействительна или срок ее действия истек."
     end
   end
 end
