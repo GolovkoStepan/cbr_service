@@ -76,5 +76,13 @@ defmodule CbrService.CurrenciesTest do
       currency = currency_fixture()
       assert %Ecto.Changeset{} = Currencies.change_currency(currency)
     end
+
+    test "update_all_currencies/1 updates rates" do
+      currency = currency_fixture()
+      Currencies.update_all_currencies([%{num_code: currency.num_code, rate: 123.45}])
+      updated_currency = Currencies.get_by_num_code(currency.num_code)
+
+      assert updated_currency.rate == 123.45
+    end
   end
 end

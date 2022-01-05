@@ -31,7 +31,6 @@ defmodule CbrServiceWeb.CurrencyLive.Show do
 
   @impl true
   def handle_info({:updated, currency}, socket) do
-    IO.inspect(socket)
     {:noreply, update(socket, :currency, fn _ -> currency end)}
   end
 
